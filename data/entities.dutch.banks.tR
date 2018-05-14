@@ -1,0 +1,21 @@
+require(data.table)
+
+entities.dutch.banks <- data.table(
+        lemma = c( "Rabo", 
+                   "rabo", 
+                   "Rabobank",
+                   "Sns", 
+                   "NIBC", 
+                   "Royal Bank", 
+                   "ING", 
+                   "SNS", 
+                   "ABN", 
+                   "ASN", 
+                   "Knab", 
+                   "DNB", 
+                   "Triodos", 
+                   "Binck", 
+                   "Bunq",
+                   "LeasePlan")
+     
+) 

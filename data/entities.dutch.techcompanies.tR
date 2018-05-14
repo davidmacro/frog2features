@@ -1,0 +1,6 @@
+require(data.table)
+
+entities.dutch.techcompanies <- data.table(
+        lemma = c("IBM", "Microsoft", "Facebook", "Google", "")
+     
+)    
