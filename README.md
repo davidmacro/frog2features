@@ -5,12 +5,12 @@ An R Library to create high quality features from FROG output.
 `Frog2Features` is an `R` library that can be used to streamline, document and consolidate workflows in feature construction procedures. `Frog2Features` starts with the output of [FROG](https://github.com/LanguageMachines/frog/) (an integrated set of memory-based NLP modules) and allows for the creation of a wide range of text-based features that can be used in subsequent machine learning applications. 
 
 ## Usecases
-
-Frog2Features can be used to: 
-
-### 1. Summarize and describe characteristics of a corpus
-
-### 2. As part of a supervised learning procedure (training and testing)
+`Frog2Features` can be used to: 
+   1. Summarize and describe various textual characteristics of a corpus.
+   2. Create and select features for use in a supervised learning procedure.
+   3. Reproduce an existing feature construction method on a new dataset.
+   4. Describe, analyze and simplify the data handling steps involved in an existing feature construction workflow. 
+   5. ...
 
 ## Supported types of text-based features
 
@@ -43,16 +43,16 @@ Frog is a sophisticated natural language processing tool, designed for the Dutch
 
 # Installation:
 ## 1. Requirements:
-   * FROG
+   * `FROG`
      * Output in tab-delimited column-formatted output (see [this](http://languagemachines.github.io/frog/) example)
      * 
-   * R Packages 
-     * R6 - required for the object- and class structure of Frog2Features
-     * data.table
-     * stringr
-     * igraph
+   * `R` Packages 
+     * `R6` - required for the object- and class structure of Frog2Features
+     * `data.table`
+     * `stringr`
+     * `igraph`
 
-## 2. Install or load the corresponding R package:
+## 2. Install or load the corresponding `R` package:
 
 ```splus
 # Method 1: install into local library
@@ -63,19 +63,15 @@ devtools::load_all(/path/to/frog2features/)
 
 ```
 
+
+
 # Frequently Asked Questions:
 
 ## What is FROG?
 [FROG](https://languagemachines.github.io/frog) is an integrated set of NLP-tools developed by Busser, Van den Bosch, Van der Sloot, & Van Gombel (2006; 2017). FROG takes raw text data as its input, and returns a preprocessed dataset which can be used for subsequent feature construction steps. Depending on the configuration used, FROG's preprocessing steps involve tokenization, lemmatization, part-of-speech tagging, morphological segmentation, syntactic dependency parsing, named-entity recognition and semantic 
 
 ## What is the difference between FROG and Frog2Features?
-FROG is a stand alone application that produces preprocessed 
-
-
+FROG is a stand alone application that produces preprocessed output. Frog2Features takes that output and creates a set of usable features. 
 
 ## Will there be support for other languages? 
-
-
-
-
-
+Possibly. 
