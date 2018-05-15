@@ -2,9 +2,36 @@
 An R Library to create high quality features from FROG output.
 
 # Introduction
-Frog2Features (F2F) is an R library that can be used to streamline, document and consolidate workflows in feature construction procedures. F2F starts with the output of [FROG](https://github.com/LanguageMachines/frog/) (an integrated set of memory-based NLP modules) and allows for the creation of a wide range of text-based features that can be used in subsequent machine learning applications. 
+`Frog2Features` is an `R` library that can be used to streamline, document and consolidate workflows in feature construction procedures. `Frog2Features` starts with the output of [FROG](https://github.com/LanguageMachines/frog/) (an integrated set of memory-based NLP modules) and allows for the creation of a wide range of text-based features that can be used in subsequent machine learning applications. 
 
-# Feature classes supported by F2F
+### Usecase
+Frog
+
+
+
+### Supported types of text-based features
+
+#### a. Indicator features
+Indicator features summarize the occurrence of a certain item (i.e., the indicator) in each document of a corpus. Typically, such features include counts, such as the frequency with which a certain word occurs in each document. In the linguistic literature, these features are typically also termed unigrams (a single indicator) or n-grams (a combined set of indicators). 
+
+There exists a wide range of potential indicator features. Frog2Features introduces a typology that can classify a range of indicator features according to three properties, namely: 
+   
+   i. the primary unit of information conveyed in the indicator
+   ii. whether the indicator is singular or plural (and, in case of plural indicators, whether to use positional proximity or syntactic dependency to form ngrams)
+   iii. what unit of measurement to report (e.g., boolean indicators, raw counts, TF-IDF-weighed figures)
+
+Frog2Features supports the following primary units of information: 
+   * raw words
+   * lemmatized words
+   * part-of-speech annotation (POS-tag or MAJOR POS-tag)
+   * morphological codes
+   * recognized entity tag  
+   * semantically enriched codes (e.g., 
+   * ... or any other property that can be merged to a FROG `data.frame`.
+      
+
+#### b. Meta-features
+
 
 
 
