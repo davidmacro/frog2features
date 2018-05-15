@@ -1,20 +1,30 @@
 # Frog2Features
-An R Library to create high quality features from FROG output.
+An R library to create high quality textual features from FROG output objects. 
 
 # 1. Introduction
-The `Frog2Features` library for R aims to streamline, document and consolidate the workflow in feature construction procedures that involve corpora of unstructured text that have been pre-processed by [FROG](https://github.com/LanguageMachines/frog/) (an integrated set of memory-based NLP modules)FROG. The `Frog2Features` library starts with the output produced by FROG, and allows for the creation of a wide range of text-based features that can be used in subsequent applications. 
+The `Frog2Features` library for R was developed at the Wetenschappelijk Onderzoeks- en Documentatiecentrum [WODC](https://www.wodc.nl/), as part of a study on the usability of textmining methods in the detection of cybercrime. Since the library solves a number of generic data handling issues involved with text mining research, it was decided to release the library to the general public. 
 
-Use cases:
-   1. Summarize and describe various textual characteristics of a corpus.
-   2. Create and select features for use in a supervised learning procedure.
-   3. Reproduce an existing feature construction method.
-   4. Describe, summarize and simplify the data handling of an existing data handling workflow. 
+Frog2Features allows researchers to streamline, customize, document and consolidate the feature construction workflow. The library starts with a dataset that has been pre-processed by [FROG](https://github.com/LanguageMachines/frog/) (an integrated set of memory-based NLP modules). Next, a wide range of indicator and meta features can be created. 
 
-# 2. Main goals
+Examples of use cases are: 
 
-## 2.1. Accessibility
+   1. Summarize and describe textual characteristics of a corpus;
+   2. Create and select features for use in a supervised learning procedure;
+   3. Reproduce an existing feature construction method;
+   4. Describe, summarize and simplify the data handling of an existing data handling workflow;
+
+# 2. Goals
+
+## 2.1. Ease of use
+
+Frog2Features was designed with two distinct `target audiences` mind. The first comprises (applied) researchers with a basic understanding of R, text mining and linguistics, that (simply) want a textmining tool that works 'out-of-the' box. If you don't want to be bothered by all-too technical details, the Frog2Features library contains a large number of presets that readily create acceptable features. 
+
+The second target audience comprises researchers with a more technical background. For these researchers, a large number of lower-level data handling functions is accessible, to allow for fine-grained control of all sorts of parameters during feature construction and extraction. 
 
 ## 2.2. Reproducability 
+
+Frog2Features was first designed to assist the featureconstruction method of 
+
 
 ## 2.3. Scalability and speed
 
