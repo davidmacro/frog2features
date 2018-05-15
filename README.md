@@ -2,10 +2,9 @@
 An R Library to create high quality features from FROG output.
 
 # 1. Introduction
-`Frog2Features` is an `R` library that can be used to streamline, document and consolidate workflows in feature construction procedures. `Frog2Features` starts with the output of [FROG](https://github.com/LanguageMachines/frog/) (an integrated set of memory-based NLP modules) and allows for the creation of a wide range of text-based features that can be used in subsequent machine learning applications. 
+The `Frog2Features` `R`-library aims to streamline, document and consolidate workflows in feature construction procedures. `Frog2Features` starts with the output of [FROG](https://github.com/LanguageMachines/frog/) (an integrated set of memory-based NLP modules) and allows for the creation of a wide range of text-based features that can be used in subsequent machine learning applications. 
 
-## Usecases
-`Frog2Features` can be used to: 
+Use cases:
    1. Summarize and describe various textual characteristics of a corpus.
    2. Create and select features for use in a supervised learning procedure.
    3. Reproduce an existing feature construction method on a new dataset.
@@ -33,13 +32,10 @@ Frog2Features supports the following primary units of information:
    * ... or any other property that can be merged to a FROG `data.frame`.
       
 
-#### b. Meta-features
 
+#### b. Meta-features 
+todo.
 
-
-
-
-Frog is a sophisticated natural language processing tool, designed for the Dutch Language. The application scans output
 
 # Installation:
 ## 1. Requirements:
