@@ -1,15 +1,18 @@
 # Frog2Features
 An R Library to create high quality features from FROG output.
 
-# Introduction
+# 1. Introduction
 `Frog2Features` is an `R` library that can be used to streamline, document and consolidate workflows in feature construction procedures. `Frog2Features` starts with the output of [FROG](https://github.com/LanguageMachines/frog/) (an integrated set of memory-based NLP modules) and allows for the creation of a wide range of text-based features that can be used in subsequent machine learning applications. 
 
-### Usecase
-Frog
+## Usecases
 
+Frog2Features can be used to: 
 
+### 1. Summarize and describe characteristics of a corpus
 
-### Supported types of text-based features
+### 2. As part of a supervised learning procedure (training and testing)
+
+## Supported types of text-based features
 
 #### a. Indicator features
 Indicator features summarize the occurrence of a certain item (i.e., the indicator) in each document of a corpus. Typically, such features include counts, such as the frequency with which a certain word occurs in each document. In the linguistic literature, these features are typically also termed unigrams (a single indicator) or n-grams (a combined set of indicators). 
