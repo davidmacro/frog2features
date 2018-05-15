@@ -2,16 +2,24 @@
 An R Library to create high quality features from FROG output.
 
 # 1. Introduction
-The `Frog2Features` `R`-library aims to streamline, document and consolidate workflows in feature construction procedures. `Frog2Features` starts with the output of [FROG](https://github.com/LanguageMachines/frog/) (an integrated set of memory-based NLP modules) and allows for the creation of a wide range of text-based features that can be used in subsequent machine learning applications. 
+The `Frog2Features` library for R aims to streamline, document and consolidate the workflow in feature construction procedures that involve corpora of unstructured text that have been pre-processed by [FROG](https://github.com/LanguageMachines/frog/) (an integrated set of memory-based NLP modules)FROG. The `Frog2Features` library starts with the output produced by FROG, and allows for the creation of a wide range of text-based features that can be used in subsequent applications. 
 
 Use cases:
    1. Summarize and describe various textual characteristics of a corpus.
    2. Create and select features for use in a supervised learning procedure.
-   3. Reproduce an existing feature construction method on a new dataset.
-   4. Describe, analyze and simplify the data handling steps involved in an existing feature construction workflow. 
-   5. ...
+   3. Reproduce an existing feature construction method.
+   4. Describe, summarize and simplify the data handling of an existing data handling workflow. 
 
-## Supported types of text-based features
+# 2. Main goals
+
+## 2.1. Accessibility
+
+## 2.2. Reproducability 
+
+## 2.3. Scalability and speed
+
+
+# 3. Supported types of text-based features
 
 #### a. Indicator features
 Indicator features summarize the occurrence of a certain item (i.e., the indicator) in each document of a corpus. Typically, such features include counts, such as the frequency with which a certain word occurs in each document. In the linguistic literature, these features are typically also termed unigrams (a single indicator) or n-grams (a combined set of indicators). 
