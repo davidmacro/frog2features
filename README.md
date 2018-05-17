@@ -31,35 +31,35 @@ A number of existing textmining libraries for R already exist (most notably, tm)
 
 ## 2.4. Flexibility
 
-The various feature construction methods can be adapted to tailor one's specific needs. This is done by using an object-oriented design (R6-classes) with a large number of built in preset objects, that can be customized to the specific problem at hand. Examples include: 
+The various feature construction methods can be adapted to tailor one's specific needs. This is done by using an object-oriented design (R6-classes) with a large number of built in preset objects, that can be customized to the specific problem at hand.
 
-  - Semantic enrichment with custom libraries 
-  -  
+Examples include: 
 
+  - Custom filters of raw data and acquired features; 
+  - Semantic enrichment with custom libraries
+  - Composite features, created by combining different aggregation levels within FROG (i.e., lemma-POS bigrams)
 
-# 3. Supported types of text-based features
+# 3. Supported types of features
 
 #### a. Indicator features
-Indicator features summarize the occurrence of a certain item (i.e., the indicator) in each document of a corpus. Typically, such features include counts, such as the frequency with which a certain word occurs in each document. In the linguistic literature, these features are typically also termed unigrams (a single indicator) or n-grams (a combined set of indicators). 
+Indicator features summarize the occurrence of a certain item (i.e., the indicator) in each document. Such features are typically summarized as simple counts, such as the frequency with which a certain word occurs in each document. In the linguistic literature these features are usually referred to as unigrams (a single indicator) or n-grams (a combined set of indicators). 
 
-There exists a wide range of potential indicator features. Frog2Features introduces a typology that can classify a range of indicator features according to three properties, namely: 
-   
-   i. the primary unit of information conveyed in the indicator
+A wide range of textual information can be used to construct indicator features. Frog2Features' indicator features can be classified according to the following typolocy: 
+
+   i. the primary unit of information conveyed in the indicator (i.e., lemmas, part-of-speech codes, semantically enriched data)
    ii. whether the indicator is singular or plural (and, in case of plural indicators, whether to use positional proximity or syntactic dependency to form ngrams)
    iii. what unit of measurement to report (e.g., boolean indicators, raw counts, TF-IDF-weighed figures)
 
 Frog2Features supports the following primary units of information: 
-   * raw words
-   * lemmatized words
-   * part-of-speech annotation (POS-tag or MAJOR POS-tag)
+   * words (raw or lemmatized)
+   * part-of-speech (major POS-categories, or fine-grained POS categories)
    * morphological codes
-   * recognized entity tag  
-   * semantically enriched codes (e.g., 
+   * recognized-entity tags  
+   * semantically-enriched codes (e.g., 
    * ... or any other property that can be merged to a FROG `data.frame`.
       
 #### b. Meta-features 
-These features summarize texts without taking into account its content. Examples are the max
-
+These features summarize texts without taking into account its content. Examples are the number of words in a sentence, or the average character length of words in a sentence. Frog2Features contains a large set of built in meta-features, that can be readily employed. 
 
 # Installation:
 
@@ -92,5 +92,5 @@ devtools::load_all(/path/to/frog2features/)
 ## What is the difference between FROG and Frog2Features?
 FROG is a stand alone application that produces preprocessed output. Frog2Features takes that output and creates a set of usable features. 
 
-## Will there be support for other languages? 
-Possibly. 
+## Will there be support for other languages besides Dutch? 
+Possibly. Frog2Features can be used on any dataset that conforms to the output of FROG. Since FROG can be trained on non-Ducth languages, it is in principle possible to use Frog2Features on other languages. However, all of FROG's presets currently target the Dutch language. 
