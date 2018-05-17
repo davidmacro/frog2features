@@ -23,10 +23,18 @@ The second target audience comprises researchers with a more technical backgroun
 
 ## 2.2. Reproducability 
 
-Frog2Features was first designed to assist the featureconstruction method of 
-
+Frog2Features was originally designed to assist supervised learning methods in crime research. In such studies, it is crucial that training- and testdatasets yield the exact same features. Also, it is desirable that a particular featureconstruction method that has been proven in one study can be used easily in another study. Frog2Features therefore contains extensive (internal) checks to ensure reproducability. In addition, various split-sample evaluations can be made to evaluate stability. 
 
 ## 2.3. Scalability and speed
+
+A number of existing textmining libraries for R already exist (most notably, tm), but these libraries scale poorly to large samples. Frog2Features makes extensive use of novel R techniques to optimize code for scalability and speed. This was done by making use of the fast `data.table` package for common rectangular operations, the use of `sparse matrices` for the storage of large term-document matrices (planned!), and the use of fast regular expression matching. 
+
+## 2.4. Flexibility
+
+The various feature construction methods can be adapted to tailor one's specific needs. This is done by using an object-oriented design (R6-classes) with a large number of built in preset objects, that can be customized to the specific problem at hand. Examples include: 
+
+  - Semantic enrichment with custom libraries 
+  -  
 
 
 # 3. Supported types of text-based features
@@ -49,13 +57,12 @@ Frog2Features supports the following primary units of information:
    * semantically enriched codes (e.g., 
    * ... or any other property that can be merged to a FROG `data.frame`.
       
-
-
 #### b. Meta-features 
-todo.
+These features summarize texts without taking into account its content. Examples are the max
 
 
 # Installation:
+
 ## 1. Requirements:
    * `FROG`
      * Output in tab-delimited column-formatted output (see [this](http://languagemachines.github.io/frog/) example)
@@ -76,8 +83,6 @@ install.packages(/path/to/frog2features/)
 devtools::load_all(/path/to/frog2features/)
 
 ```
-
-
 
 # Frequently Asked Questions:
 
