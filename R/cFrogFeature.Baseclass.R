@@ -146,10 +146,8 @@
   
         ), 
          
-        private = list(
-		 
-         
-			
+        private = list( 
+		
             checkDescription = function(){
 			    any(self$Name            %>% is.null,
                     self$Description     %>% is.null,

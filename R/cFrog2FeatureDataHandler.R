@@ -13,7 +13,7 @@
         
         Description         = NULL,  
         Logbook             = NULL,    
-        FeatureDefinitions  = NULL,  
+        PathDefinitions     = NULL,  
         Labels              = NULL, 
         Features            = NULL,
          
@@ -199,7 +199,7 @@
         #' @examples
         initialize = function(Dataset              = NULL, 
                               Settings             = NULL,
-                              FeatureDefinitions   = NULL, 
+                              PathDefinitions      = NULL, 
                               Dictionaries         = NULL, ...){
  
             cat("# ----------------------------------------------------------------\r\n")
@@ -223,7 +223,7 @@
             # (i.1) Check input arguments                                                                 #
             # ------------------------------------------------------------------------------------------- #
  
-            if(any(Dataset %>% is.null, Settings %>% is.null, FeatureDefinitions %>% is.null)){
+            if(any(Dataset %>% is.null, Settings %>% is.null, PathDefinitions %>% is.null)){
                 cat("Warning: Initializing empty or partial Frog2Features-object \r\n\r\n")
                 cat("Please note that to continue, you must additionally provide: \r\n\r\n")
             }
@@ -238,12 +238,12 @@
                 self$Settings %<>% modifyList(Settings)
             }
             
-            if(FeatureDefinitions %>% is.null){
-                cat("\t\t a valid 'FeatureDefinitions' list of feature-definition objects.use: setFeatureDefinitions\r\n") 
+            if(PathDefinitions %>% is.null){
+                cat("\t\t a valid 'PathDefinitions' list of path definitions stored in feature objects. Use: setPathDefinitions\r\n") 
             }
             
             if(Dictionaries %>% is.null){
-                cat("\t\t No dictionaries a valid 'FeatureDefinitions' list of feature-definition objects.use: setFeatureDefinitions\r\n")  
+                cat("\t\t No dictionaries a valid 'PathDefinitions' list of feature-definition objects.use: setPathDefinitions\r\n")  
             }
             
             # ------------------------------------------------------------------------------------------- #
@@ -260,9 +260,9 @@
                 self$setSettings(x = Settings)
             }        
             
-            if(FeatureDefinitions %>% is.null %>% not){ 
-                cat("\t\t - Set FeatureDefinitions \r\n") 
-                self$setFeatureDefinitions(x = Features)
+            if(PathDefinitions %>% is.null %>% not){ 
+                cat("\t\t - Set Path definitions \r\n") 
+                self$setPathDefinitions(PathDefinitions)
             }    
             
             if(Dictionaries %>% is.null %>% not){ 
@@ -282,10 +282,7 @@
             cat("\t\t\t ...$setRawData(x = ...)\r\n")
             
             cat("\t\t\t ...$setSettings()\r\n")
-                  
-            cat("\t\t\t ...$createRequiredDictionaries()\r\n")
-                  
-            cat("\t\t\t ...$extractFeatures()\r\n")
+                    
                 
             invisible(self)
         }, 
@@ -295,35 +292,38 @@
         # ------------------------------------------------------------------------------------------- # 
         setRawData = function(x){
          
-            # Todo: check on valid frog data input object
+            stopifnot(c("data.frame", "data.table") %in% class(x) %>% any)
+			 
             self$Data$Raw <- x %>% copy %>% FixStringsFactors %>% data.table
             setorderv(self$Data$Raw, c("docid","sent","position"))
             
-            invisible(self) 
-            
+            invisible(self)  
         },
             
         setReplayData = function(x){
-          
+		
+			stopifnot(c("data.frame", "data.table") %in% class(x) %>% any)
+		
             self$Data$Replay <-x %>% copy %>%  FixStringsFactors %>% data.table
             setorderv(self$Data$Raw, c("docid","sent","position"))
             
-            invisible(self) 
-            
+            invisible(self)  
         },           
-        
-        
+         
         setSettings = function(...){ 
-            self$Settings %<>% modifyList(list(...))  
-            
+            self$Settings %<>% modifyList(list(...))   
             invisible(self) 
         },
         
-        setFeatureDefinitions = function(...){
+        setPathDefinitions = function(...){
             
-            stop("All features should be named.") %if% any({list(...) %>% names %>% nchar} == 0)
-            
-            self$FeatureDefinitions <- list(...) 
+			dotted <- list(...)
+ 
+			if(dotted %>% names %>% length %>% equals(0)){
+				names(dotted) <- "f" %+% 1:length(names(dotted))
+			}
+		   
+            self$PathDefinitions <- dotted
             
             invisible(self) 
         },
@@ -471,7 +471,7 @@
             
             if(x %in% c("global","Global", "master","Master")){return(self$Data$Global)}
     
-            return(self$Data$Global[[x]]) 
+            return(self$Data$Raw[[x]]) 
             
         },
         
@@ -490,8 +490,7 @@
             }
              
         },
-        
-        
+         
         getDataForFeature = function(path, type = "raw", fix.missing.values = FALSE){
             
             stop("Type should be 'raw' or 'replay'.") %if% (type %notin% c("raw", "replay"))
@@ -506,8 +505,8 @@
                    id <- self$Data$Replay.Dictionaries[[path]]$dataID 
                    return(self$Data$Replay.List[[id]])
                 }
-            } else {
-                
+            } else { 
+			
                 if(self$Labels %>% is.null %>% not){
                     
                     if(type == "raw"){ 
@@ -536,15 +535,39 @@
                 } else {
                     cat("Error. Please run setlabels first.")
                 }
-                
-                
-            }
-            
-            
-            
+                 
+            } 
              
         },
         
+		getPaths = function(type = "raw", verbose = F){
+		 
+			stopifnot(type %in% c("raw","replay"))
+		 
+			if(type == "raw"){
+				if(self$RequiredDataTransformations$full.paths %>% is.null){
+					cat("No paths defined yet!") %if% verbose
+					return(FALSE)
+				} else {
+					cat("The following paths are defined: \r\n") %if% verbose
+					cat(self$RequiredDataTransformations$full.paths %>% names) %if% verbose
+					return(self$RequiredDataTransformations$full.paths %>% names)
+				} 
+			}  
+			
+			if(type == "replay"){
+				if(self$RequiredDataTransformations$replay.paths %>% is.null){
+					cat("No paths defined yet!") %if% verbose
+					return(FALSE)
+				} else {
+					cat("The following paths are defined: \r\n") %if% verbose
+					cat(self$RequiredDataTransformations$replay.paths %>% names) %if% verbose
+					return(self$RequiredDataTransformations$replay.paths %>% names)
+				}  
+			}
+			
+		}, 
+		
         getFeature = function(x, type = "raw"){
             if(type == "raw"){
                 if(x %in% (self$Data$Raw.Features %>% names)){
@@ -662,11 +685,19 @@
                                 
                             tmp.rule %<>% serialize_rule
                             
+							# Update the attributes of the vertex in the full graph
                             self$RequiredDataTransformations$full.graph %<>% UpdateVertexAttributes(
                                 vertex.name = vertex.name, 
                                 new.rule    = tmp.rule, 
                                 verbose     = F
                             ) 
+							
+							# Update the attributes of the vertex in extracted path
+							self$RequiredDataTransformations$full.paths[[path.name]] %<>% UpdateVertexAttributes(
+                                vertex.name = vertex.name, 
+                                new.rule    = tmp.rule, 
+                                verbose     = F
+                            )  
                         }
                      }
                   }
@@ -764,11 +795,19 @@
                                 
                             tmp.rule %<>% serialize_rule
                             
-                            self$RequiredDataTransformations$full.graph %<>% UpdateVertexAttributes(
+							# Update the attributes of the vertex in the full graph
+                            self$RequiredDataTransformations$replay.graph %<>% UpdateVertexAttributes(
                                 vertex.name = vertex.name, 
                                 new.rule    = tmp.rule, 
                                 verbose     = F
                             ) 
+							
+							# Update the attributes of the vertex in extracted path
+							self$RequiredDataTransformations$replay.paths[[path.name]] %<>% UpdateVertexAttributes(
+                                vertex.name = vertex.name, 
+                                new.rule    = tmp.rule, 
+                                verbose     = F
+                            )  
                         }
                      }
                   }
@@ -780,38 +819,40 @@
             frogdh$Data$Raw.Features[[1]] 
         },
         
-        getRequiredDataTransformations =  function(FeatureDefinitions = NULL){
-            
-            if(FeatureDefinitions %>% is.null & self$FeatureDefinitions %>% is.null){
-                stop("\t\tNo features defined; cannot calculate required datatransformations.")
-            }
-            
-            if(FeatureDefinitions %>% is.null & self$FeatureDefinitions %>% is.null %>% not){
-                
-                FeatureDefinitions <- self$FeatureDefinitions
-                
-                if({self$RequiredDataTransformations %>% length} > 0){
-                    cat("\t\tWarning: data transformations already provided; overriding previously specified settings.\r\n")
-                } 
-                
-            }
-            
-            self$RequiredDataTransformations <- getRequiredDataTransformations(FeatureDefinitions = FeatureDefinitions)
-            
-            
-            self$Data$Raw.Dictionaries  <- getRequiredDictionaryList(paths = self$RequiredDataTransformations$full.paths,
-                                                                     graph = self$RequiredDataTransformations$full.graph)
-            
-                        
-            self$Data$Replay.Dictionaries <- getRequiredDictionaryList(paths = self$RequiredDataTransformations$replay.paths,
-                                                                       graph = self$RequiredDataTransformations$replay.graph)
-            
-            self$Data$Raw.Features    <- list()
-            self$Data$Replay.Features <- list()
-             
-        },
- 
-         
+		getRequiredDataTransformations =  function(PathDefinitions = NULL){
+			
+			if(PathDefinitions %>% is.null & self$PathDefinitions %>% is.null){
+				stop("\t\tNo features defined; cannot calculate required datatransformations.")
+			}
+			
+			if(PathDefinitions %>% is.null & self$PathDefinitions %>% is.null %>% not){
+				
+				PathDefinitions <- self$PathDefinitions
+				
+				if({self$RequiredDataTransformations %>% length} > 0){
+					cat("\t\tWarning: data transformations already provided; overriding previously specified settings.\r\n")
+				} 
+				
+			}
+			
+			self$RequiredDataTransformations <- getRequiredDataTransformations(x = PathDefinitions)
+			
+			self$Data$Raw.Dictionaries  <- getRequiredDictionaryList(
+				paths = self$RequiredDataTransformations$full.paths,
+				graph = self$RequiredDataTransformations$full.graph
+			)
+			
+			self$Data$Replay.Dictionaries <- getRequiredDictionaryList(
+				paths = self$RequiredDataTransformations$replay.paths,
+				graph = self$RequiredDataTransformations$replay.graph
+			)
+			
+			self$Data$Raw.Features    <- list()
+			self$Data$Replay.Features <- list()
+			
+		},
+		 
+				 
               
         help = function(method = NULL){
         
@@ -881,7 +922,7 @@
             #         (5)        the list/data.frame with data transformations to be applied        
             
             method_to_save = list( 
-                Settings   = self$Settings,
+                Settings     = self$Settings,
                 objFeatures  = self$objFeatures, 
                 Dictionaries = self$Dictionaries
             )
@@ -937,53 +978,8 @@
             
             return(dtfrog[eval(parse(text=exp)),] )
             
-        }, 
-    
-        summarizeDictionaries = function(){
-  
         } 
-          
-    ),          
-        
-    
-    private = list( 
-        
-        checkRawData = function(x){
-            TRUE %>% return
-        },
-        
-        checkSettings = function(x){
-            TRUE %>% return
-        },
-        
-        checkDataset = function(x){
-            TRUE %>% return
-        },
-        
-        checkDictionaries = function(x){
-            TRUE %>% return
-        },
-        
-        valid.frog.columns   = c("docid","sent","pos","majorpos","morph"),
-        valid.frog.columns2  = c("docid","sent","pos","majorpos","morph"),        
-        
-        
-        valid.values.predefined = list(
-        
-            ngrams = list(
-        
-                tokens               = list(allowed    = c("word", "lemma", "morph", "pos","majorpos"), notallowed = c("docid")),
-                adjacency.criteria   = list(allowed    = c("sentence"),notallowed = c()),
-                degrees              = list(1,2)
-                
-            ),
-            
-            dtfrog = list(
-            
-            
-            ) 
-        ) 
-    )
+    )    
 )
     
     

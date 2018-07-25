@@ -14,15 +14,21 @@
     			invisible(self)
     		},
     	
-    		Add = function(type, rule = list(type = "input"), tag = NA, ...){
+    		Add = function(rule = list(), type = NULL, tag = NA, ...){
     		 
-    		    invalid.rule <- FALSE
-    		      
-    		    # Override rule$type with the function=argument's "type" 
+				invalid.rule <- FALSE
+			 
+				dotted <- list(...)
+			 
+				if(dotted %>% length %>% is_greater_than(0)){
+					rule %<>% modifyList(dotted) 
+				}
+			  
     		    (rule$type <- type) %if% (type %>% is.null %>% not)
     		    
     			if((rule$type %notin% getValidRuleTypes()) | rule %>% is.valid.dt.rule %>% not){
-    				stop("Incorrectly specified rule.")
+    				
+					stop("Incorrectly specified rule.")
     				
     			} else { 
     			
@@ -41,8 +47,7 @@
     			 	
     			}  
     		    
-    		    invisible(self) 
-    		    
+    		    invisible(self)  
     		},
     		
     		getCallFromRule = function(rule){
@@ -53,8 +58,7 @@
     		
     		
     		Finalize = function(do = "calculate_count", construct.features = T, output = T,  feature.type = "count", ...){
-                
-		    
+                 
     		    use.dictionary <- ("dictionary" %in% (formals(get(do)) %>% names))
     		   
     		    if(use.dictionary){ 
@@ -76,12 +80,11 @@
             		                 do           = do  
                         ) %>% modifyList(list(...))
     		            
-                         self$Add(type = "construct.features", rule = rule)  
+						self$Add(type = "construct.features", rule = rule)  
                         
     		        }
-    		    }
- 
-    		    
+    		    } 
+				
     		    if(output){
                     if(self$DataTransformators[type == "output", .N] == 0){
     		            self$Add(type = "output")   
