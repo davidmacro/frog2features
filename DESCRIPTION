@@ -3,8 +3,8 @@ Title: Convert Frog Object (NLP-data) to Features
 Version: 0.0.1
 Authors@R: person("David", "Macro", email = "d.a.macro@minvenj.nl", role = c("aut", "cre"))
 Description: Convert Frog Object (NLP-data) to Features.
-Depends: data.table (>= 1.10.4), magrittr, digest, R6
-Imports: data.table (>= 1.10.4), magrittr, digest, R6
+Depends: data.table (>= 1.10.4), magrittr, digest, R6, igraph
+Imports: data.table (>= 1.10.4), magrittr, digest, R6, igraph
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
