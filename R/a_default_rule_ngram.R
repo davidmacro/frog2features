@@ -74,15 +74,15 @@
 #' \dontrun{
 #' 
 #' # Load the example data
-#' data(wb.sr.frogged)
+#' data(frog_grondwet.rda)
 #' 
 #' # Make lemma bigrams based on positional proximity
-#' result1 <- wb.sr.frogged %>% 
+#' result1 <- frog_grondwet.rda %>% 
 #'     apply_rule(default_rule_ngram("lemma.bigram.adjacency", 
 #'          ngram.new.colname = "ngram_1")) 
 #' 
 #' # Make lemma bigrams based on syntactic proximity
-#' result2 <- wb.sr.frogged %>% 
+#' result2 <- frog_grondwet.rda %>% 
 #'     apply_rule(default_rule_ngram("lemma.bigram.syntactic", 
 #'         ngram.new.colname = "ngram_2")) 
 #'
